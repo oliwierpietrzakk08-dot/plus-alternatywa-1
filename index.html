@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLUS Piotr Lus - Wylewki Betonowe i Ocieplenia Pianą PUR</title>
+    <meta name="description"
+        content="PLUS Piotr Lus - Profesjonalne wylewki betonowe z miksokreta oraz ocieplenia pianą PUR. Kompleksowa obsługa, darmowe pomiary, najwyższa jakość. Zobacz naszą ofertę!">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        :root {
+            --primary-color: #c0392b;
+            --secondary-color: #1c1c1c;
+            --light-bg: #ffffff;
+            --gray-bg: #f4f4f4;
+            --footer-bg: #1c1c1c;
+            --text-dark: #1c1c1c;
+            --text-light: #ffffff;
+            --text-muted: #aaaaaa;
+            --border-color: #e0e0e0;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Top Border Line */
+        html::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+            z-index: 9999;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        section:nth-of-type(even) {
+            background-color: var(--gray-bg);
+        }
+
+        section:nth-of-type(odd) {
+            background-color: var(--light-bg);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 4px solid var(--primary-color);
+            line-height: 1.1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 0;
+            /* Industrial look */
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .btn-primary:hover {
+            background: #d17812;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(232, 137, 26, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-light);
+        }
+
+        .btn-outline:hover {
+            background: var(--text-light);
+            color: var(--accent-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #000;
+            color: var(--text-light);
+            padding: 12px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar-info span {
+            margin-right: 20px;
+        }
+
+        .top-bar-info i {
+            color: var(--primary-color);
+            margin-right: 5px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: #ffffff;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-dark);
+            letter-spacing: 2px;
+            margin-top: 3px;
+        }
+
+        nav ul {
+            display: flex;
+        }
+
+        nav ul li {
+            position: relative;
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 10px 0;
+            color: var(--text-dark);
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--primary-color);
+        }
+
+        /* Contact Grid and Info */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .contact-item {
+            background: #fff;
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-bottom: 4px solid var(--primary-color);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .contact-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .contact-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .contact-item p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dropdown */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: #fff;
+            min-width: 250px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            display: block;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #ddd;
+            color: var(--text-dark);
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+            background-color: transparent !important;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('hero_insulation_flooring_1773409264328.png') center/cover no-repeat;
+            animation: kenBurns 20s infinite alternate;
+            z-index: -2;
+        }
+
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(28, 28, 28, 0.5), rgba(28, 28, 28, 0.8));
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+        }
+
+        .hero-content {
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 0.8s forwards 0.2s;
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-content h2 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: 1.35rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        .hero-btns .btn {
+            margin: 0 15px;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-light);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0) translateX(-50%);
+            }
+
+            40% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+
+            60% {
+                transform: translateY(-5px) translateX(-50%);
+            }
+        }
+
+        /* About Section (Parallax) */
+        #about-parallax {
+            height: 50vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('pur_foam_insulation_attic_closed_cell_1773409302664.png');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 30px;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .stat-item p {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Services Tabs */
+        #services {
+            padding: 100px 0;
+            background: var(--gray-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            background: #fff;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .tab-btn:hover {
+            background: var(--gray-bg);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .tab-content {
+            background: #fff;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .service-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .service-info p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefits-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .benefits-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* FAQ inside tab */
+        .faq-section {
+            grid-column: span 2;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+        }
+
+        .faq-section h4 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .faq-question::before {
+            content: 'Q:';
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        .faq-answer {
+            color: #666;
+            padding-left: 25px;
+        }
+
+        /* Contact Section */
+        #contact {
+            padding: 100px 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 50px;
+        }
+
+        .contact-info-block h3 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 25px;
+        }
+
+        .info-item i {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .info-detail h4 {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .info-detail p {
+            color: #666;
+        }
+
+        .contact-form {
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            height: 150px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 80px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .footer-logo p {
+            color: #bbb;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links h3,
+        .footer-contact h3 {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-links h3::after,
+        .footer-contact h3::after {
+            content: '';
+            width: 40px;
+            height: 2px;
+            background: var(--primary-color);
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        .footer-contact i {
+            color: var(--primary-color);
+            margin-right: 15px;
+            width: 20px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 0.8rem;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: var(--secondary-color);
+            z-index: 2000;
+            padding: 80px 30px;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu ul li {
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 10px;
+        }
+
+        .mobile-menu ul li a {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 700;
+            display: block;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1500;
+            backdrop-filter: blur(5px);
+        }
+
+        .mobile-overlay.active {
+            display: block;
+        }
+
+        /* Responsive Media Queries - ALWAYS AT THE BOTTOM */
+        @media (max-width: 1200px) {
+            .hero-content h2 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-content h2 {
+                font-size: 2.5rem;
+            }
+
+            .tab-content.active {
+                grid-template-columns: 1fr;
+            }
+
+            .service-image {
+                height: 400px;
+                order: -1;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar-info span {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .top-bar-social {
+                display: none;
+            }
+
+            header {
+                padding: 10px 0;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            #hero {
+                height: auto;
+                min-height: 80vh;
+                padding: 120px 0 80px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .hero-content h2 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+                margin-bottom: 20px;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+
+            .hero-btns {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .hero-btns .btn {
+                width: 100%;
+                max-width: 300px;
+                margin: 0;
+            }
+
+            #about-parallax {
+                height: auto;
+                padding: 80px 0;
+                background-attachment: scroll;
+            }
+
+            .about-content h2 {
+                font-size: 2rem;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .tabs {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .tab-btn {
+                width: 100%;
+                border-radius: 0;
+                margin-bottom: 2px;
+                text-align: left;
+            }
+
+            .tab-content {
+                padding: 40px 20px;
+            }
+
+            .faq-section {
+                grid-column: 1;
+            }
+
+            .contact-form {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Stats Section */
+        #stats {
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 80px 0;
+            position: relative;
+        }
+
+        #stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-box h3 {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .stat-box p {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* Trust Section */
+        #trust {
+            background: var(--light-bg);
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .trust-card {
+            background: #fff;
+            padding: 40px;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .trust-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .trust-card.dark {
+            background: var(--secondary-color);
+            color: var(--text-light);
+        }
+
+        .trust-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .trust-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .trust-card p {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .trust-card.dark p {
+            color: #aaa;
+        }
+
+        /* Map Section */
+        #map-section {
+            background: #fff;
+        }
+
+        #map {
+            height: 450px;
+            width: 100%;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            margin: 40px 0 20px;
+            z-index: 10;
+        }
+
+        .map-info {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        /* Partners Section */
+        #partners {
+            background: var(--light-bg);
+            padding: 80px 0;
+            overflow: hidden;
+        }
+
+        .partners-track {
+            display: flex;
+            width: calc(200px * 12); /* 160px card + 40px gap */
+            animation: scroll 30s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-200px * 6)); }
+        }
+
+        .partner-logo {
+            width: 240px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .partner-card {
+            background: #ffffff;
+            width: 220px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 32px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .partner-card img {
+            max-width: 100%;
+            height: 60px;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .partner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .partner-fallback {
+            font-family: 'Source Sans 3', sans-serif;
+            font-weight: 700;
+            color: #1c1c1c;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* CTA Section */
+        #cta-final {
+            background: var(--secondary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        #cta-final h2 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        #cta-final p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #888;
+        }
+
+        #cta-final .hero-btns {
+            justify-content: center;
+            display: flex;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-info">
+                <span><i class="fas fa-phone"></i> (+48) 531 402 222</span>
+                <span><i class="fas fa-envelope"></i> kontakt@plusizolacje.pl</span>
+            </div>
+            <div class="top-bar-social">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="#">
+                    <h1>PLUS PIOTR LUS</h1>
+                    <span>WYLEWKI & OCIEPLENIA</span>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#hero" class="active">O nas</a></li>
+                    <li class="dropdown">
+                        <a href="#services">Wylewki z agregatu <i class="fas fa-chevron-down"
+                                style="font-size: 0.7rem; margin-left: 5px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="openTab(event, 'tab1')">Wylewki betonowe</a>
+                            <a href="#" onclick="openTab(event, 'tab2')">Wylewki styrobetonowe</a>
+                            <a href="#">Nasze realizacje - wylewki</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#services">Ocieplenia pianą PUR <i class="fas fa-chevron-down"
+                                style="font-size: 0.7rem; margin-left: 5px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="openTab(event, 'tab3')">Zastosowanie pianek poliuretanowych</a>
+                            <a href="#" onclick="openTab(event, 'tab3')">Pianka zamkniętokomórkowa</a>
+                            <a href="#" onclick="openTab(event, 'tab4')">Pianka otwartokomórkowa</a>
+                            <a href="#">Nasze realizacje - ocieplenia</a>
+                        </div>
+                    </li>
+                    <li><a href="#contact">Kontakt</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Structure -->
+    <div class="mobile-overlay"></div>
+    <div class="mobile-menu">
+        <div class="mobile-menu-close"><i class="fas fa-times"></i></div>
+        <ul>
+            <li><a href="#hero" onclick="closeMobileMenu()">O nas</a></li>
+            <li><a href="#services" onclick="closeMobileMenu()">Wylewki</a></li>
+            <li><a href="#services" onclick="closeMobileMenu()">Ocieplenia</a></li>
+            <li><a href="#contact" onclick="closeMobileMenu()">Kontakt</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="container">
+                <h2>Twój dom w dobrych rękach</h2>
+                <p>Profesjonalne izolacje pianą PUR i wylewki betonowe. Obsługujemy województwo mazowieckie i łódzkie.
+                </p>
+                <div class="hero-btns" data-aos="fade-up" data-aos-delay="400">
+                    <a href="#services" class="btn btn-primary">Sprawdź ofertę</a>
+                    <a href="tel:+48531402222" class="btn btn-primary"><i class="fas fa-phone"></i> Zadzwoń teraz</a>
+                    <a href="#contact" class="btn btn-outline">Kontakt</a>
+                </div>
+            </div>
+        </div>
+        <a href="#stats" class="scroll-down"><i class="fas fa-chevron-down"></i></a>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-box" data-aos="fade-up">
+                    <h3 class="counter" data-target="15">0</h3>
+                    <p>lat doświadczenia</p>
+                </div>
+                <div class="stat-box" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="counter" data-target="4000">0</h3>
+                    <p>zrealizowanych inwestycji</p>
+                </div>
+                <div class="stat-box" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="counter" data-target="2">0</h3>
+                    <p>województwa</p>
+                </div>
+                <div class="stat-box" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="counter" data-target="100">0</h3>
+                    <p>zadowolonych klientów</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section id="trust">
+        <div class="container">
+            <div class="section-title" data-aos="fade-right">
+                <h2>Dlaczego warto nam zaufać?</h2>
+            </div>
+            <div class="trust-grid">
+                <div class="trust-card" data-aos="fade-up">
+                    <i class="fas fa-helmet-safety"></i>
+                    <h3>Doświadczenie</h3>
+                    <p>15 lat w branży i ponad 4000 inwestycji mówi samo za siebie</p>
+                </div>
+                <div class="trust-card dark" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-truck-fast"></i>
+                    <h3>Kompleksowa obsługa</h3>
+                    <p>Od pomiarów, przez materiały, aż po gotową realizację</p>
+                </div>
+                <div class="trust-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-award"></i>
+                    <h3>Gwarancja jakości</h3>
+                    <p>Każda praca wykonana zgodnie ze sztuką budowlaną</p>
+                </div>
+                <div class="trust-card dark" data-aos="fade-up" data-aos-delay="0">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Terminowość</h3>
+                    <p>Dotrzymujemy ustalonych terminów — zawsze</p>
+                </div>
+                <div class="trust-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-user-check"></i>
+                    <h3>Indywidualne podejście</h3>
+                    <p>Każda inwestycja traktowana jest priorytetowo</p>
+                </div>
+                <div class="trust-card dark" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-comments"></i>
+                    <h3>Fachowe doradztwo</h3>
+                    <p>Pomożemy dobrać najlepsze rozwiązanie dla Twojego budynku</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section id="map-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-right">
+                <h2>Obszar działania</h2>
+                <p>Obsługujemy województwo mazowieckie i łódzkie</p>
+            </div>
+            <div id="map" data-aos="zoom-in"></div>
+            <div class="map-info">
+                <p>...oraz wszystkie miejscowości w okolicach tych miast.</p>
+                <p style="margin-top: 10px; color: var(--primary-color);">Masz pytanie? Zadzwoń: +48 531 402 222</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (Parallax) -->
+    <section id="about-parallax">
+        <div class="container">
+            <div class="about-content">
+                <h2>O Naszej Firmie</h2>
+                <p>Nasza firma specjalizuje się w wykonywaniu wylewek betonowych oraz w ocieplaniu budynków Pianą PUR.
+                    Cechuje Nas dokładność, profesjonalizm oraz terminowość.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <h3 class="counter">300</h3>
+                        <p>Inwestycji rocznie</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>100%</h3>
+                        <p>Zadowolenia</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24h</h3>
+                        <p>Szybki kontakt</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nasza Oferta</h2>
+                <p>Specjalistyczne usługi budowlane na najwyższym poziomie</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab(event, 'tab1')">Wylewki betonowe</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab2')">Wylewki styrobetonowe</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab3')">Pianka PUR Zamkniętokomórkowa</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab4')">Pianka PUR Otwartokomórkowa</button>
+            </div>
+
+            <!-- Tab 1 -->
+            <div id="tab1" class="tab-content active">
+                <div class="service-info">
+                    <h3>Wylewki betonowe</h3>
+                    <p>Wylewki półsuche z miksokreta, są wylewkami mineralnymi (główny skład to piach, cement i woda),
+                        bez szkodliwych substancji chemicznych. Składniki te mieszane są w agregacie (miksokret) a
+                        następnie za pomocą wysokiego ciśnienia tłoczone wężami w docelowe miejsca.</p>
+                    <p>Wylewki te są wyjątkowo równe, mocne i trwałe a dzięki zatarciu także niepylące i gładkie.
+                        Różnica między tradycyjnym betonem wynika z małej ilości wody zarobowej dzięki czemu
+                        konsystencja wylewek nie jest płynna a co za tym idzie łatwa w formowaniu i obróbce. Stąd nazwa
+                        "półsuche".</p>
+
+                    <h4>Zakres naszych prac:</h4>
+                    <ul class="benefits-list">
+                        <li>Darmowe pomiary i doradztwo w doborze grubości styropianu</li>
+                        <li>Wyznaczanie poziomów profesjonalnymi niwelatorami elektronicznymi</li>
+                        <li>Zaopatrzenie w cały niezbędny towar (piach, cement, chemia, zbrojenie)</li>
+                        <li>Wykonanie zgodnie ze sztuką budowlaną i najwyższą starannością</li>
+                        <li>Mechaniczne zacieranie betonu wraz z pełną obróbką</li>
+                        <li>Odpowiednie dylatowanie w celu zapobiegania pęknięciom</li>
+                    </ul>
+                </div>
+                <div class="service-image">
+                    <img src="concrete_flooring_miksokret_1773409284320.png" alt="Wylewki betonowe">
+                </div>
+                <div class="faq-section">
+                    <h4>Najczęściej zadawane pytania (FAQ)</h4>
+                    <div class="faq-item">
+                        <div class="faq-question">Jaka powinna być grubość wylewki betonowej?</div>
+                        <div class="faq-answer">Optymalna grubość wylewki to około 6cm.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Czy wylewki betonowe z miksokreta nadają się na ogrzewanie podłogowe?
+                        </div>
+                        <div class="faq-answer">Tak, wylewki te doskonale przewodzą ciepło dzięki temu są najczęściej
+                            wybierane przez inwestorów.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Jaki jest czas wykonania?</div>
+                        <div class="faq-answer">W ciągu jednego dnia jesteśmy w stanie wykonać ponad 200m2 wylewek z
+                            zachowaniem wszelkich standardów i norm.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2 -->
+            <div id="tab2" class="tab-content">
+                <div class="service-info">
+                    <h3>Wylewki styrobetonowe</h3>
+                    <p>Styrobeton jest to lekka masa wyrównująca pełniąca funkcje izolacji termicznej i akustycznej.
+                        Masa ta składa się z granulek styropianowych z dodatkiem cementu jako spoiwa i wody.</p>
+                    <p>Doskonale wyrównuje wszelkie nierówności (np. garby na stropach, wystające tregry) oraz wypełnia
+                        wszelkie zakamarki (rozbudowane instalacje wodno-kanalizacyjne i elektryczne). Po zastygnięciu
+                        stanowi równą powierzchnię na której można wykonywać dalsze prace.</p>
+
+                    <h4>Zalety:</h4>
+                    <ul class="benefits-list">
+                        <li>Zbliżone do styropianu parametry termo-akustyczne</li>
+                        <li>Konsystencja która wnika i wypełnia wszelkie nierówności</li>
+                        <li>Szybki czas realizacji i czystość pracy</li>
+                        <li>Możliwość tłoczenia na duże odległości</li>
+                        <li>Krótki czas schnięcia</li>
+                    </ul>
+                </div>
+                <div class="service-image">
+                    <img src="hero_insulation_flooring_1773409264328.png" alt="Wylewki styrobetonowe">
+                </div>
+            </div>
+
+            <!-- Tab 3 -->
+            <div id="tab3" class="tab-content">
+                <div class="service-info">
+                    <h3>Pianka PUR Zamkniętokomórkowa</h3>
+                    <p>Pianka poliuretanowa zamkniętokomórkowa to kolejna rewolucyjna forma izolacji. Charakteryzuje się
+                        hermetyczną strukturą komórkową, co sprawia, że jest doskonała w warunkach, gdzie konieczne jest
+                        zminimalizowanie przewodzenia pary wodnej.</p>
+                    <p>W przeciwieństwie do piany otwartokomórkowej ta nie nadaje się jednak do stosowania na poddaszu w
+                        połączeniu z drewnianą więźbą dachową. Jest zdecydowanie twardsza i ma mniejszy rozrost.</p>
+
+                    <h4>Zalety:</h4>
+                    <ul class="benefits-list">
+                        <li>Doskonała izolacja termiczna (niższe koszty ogrzewania)</li>
+                        <li>Wysoka wytrzymałość mechaniczna i odporność na odkształcenia</li>
+                        <li>Skuteczna bariera przed wilgocią</li>
+                        <li>Trwałość przez długi okres czasu</li>
+                    </ul>
+                </div>
+                <div class="service-image">
+                    <img src="pur_foam_insulation_attic_closed_cell_1773409302664.png"
+                        alt="Pianka PUR Zamkniętokomórkowa">
+                </div>
+            </div>
+
+            <!-- Tab 4 -->
+            <div id="tab4" class="tab-content">
+                <div class="service-info">
+                    <h3>Pianka PUR Otwartokomórkowa</h3>
+                    <p>Otwartokomórkowa pianka poliuretanowa to innowacyjne rozwiązanie izolacyjne, które łączy w sobie
+                        doskonałą termoizolację, elastyczność, i skuteczną regulację wilgotności.</p>
+                    <p>Jej struktura porowata (otwarta) umożliwia przewodzenie pary wodnej, co sprawia, że jest idealnym
+                        wyborem do zastosowania w izolacji poddaszy w budynkach mieszkalnych. Posiada właściwości
+                        samogasnące.</p>
+
+                    <h4>Przewaga nad wełną mineralną:</h4>
+                    <ul class="benefits-list">
+                        <li>Całkowity brak mostków termicznych (szczelne wypełnienie)</li>
+                        <li>Odporność na wilgoć - nie traci właściwości po wyschnięciu</li>
+                        <li>Środowisko nieprzyjazne dla gryzoni</li>
+                        <li>Bezpyłowość i hipoalergiczność (bezpieczna dla zdrowia)</li>
+                        <li>Szybki i precyzyjny proces aplikacji</li>
+                        <li>Trwałość i stabilność izolacji bez efektu osiadania</li>
+                    </ul>
+                </div>
+                <div class="service-image">
+                    <img src="pur_foam_insulation_attic_open_cell_white_1773409320393.png"
+                        alt="Pianka PUR Otwartokomórkowa">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section id="partners">
+        <div class="container">
+            <div class="section-title" data-aos="fade-right">
+                <h2>Współpracujemy z najlepszymi</h2>
+                <p>Używamy sprawdzonych materiałów i maszyn od wiodących producentów</p>
+            </div>
+        </div>
+        <div class="partners-track">
+            <!-- Graco -->
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/graco.com" alt="Graco" onerror="this.outerHTML='<b class=\'partner-fallback\'>GRACO</b>'">
+                </div>
+            </div>
+            <!-- Pramac -->
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/pramac.com" alt="Pramac" onerror="this.outerHTML='<b class=\'partner-fallback\'>PRAMAC</b>'">
+                </div>
+            </div>
+            <!-- Asteco -->
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/asteco.com" alt="Asteco" onerror="this.outerHTML='<b class=\'partner-fallback\'>ASTECO</b>'">
+                </div>
+            </div>
+            <!-- BMS -->
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/bms.pl" alt="BMS" onerror="this.outerHTML='<b class=\'partner-fallback\'>BMS</b>'">
+                </div>
+            </div>
+            <!-- Kreber -->
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/kreber.nl" alt="Kreber" onerror="this.outerHTML='<b class=\'partner-fallback\'>KREBER</b>'">
+                </div>
+            </div>
+            <!-- Nivcomp -->
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/nivcomp.com" alt="Nivcomp" onerror="this.outerHTML='<b class=\'partner-fallback\'>NIVCOMP</b>'">
+                </div>
+            </div>
+            <!-- DUPLICATES FOR INFINITE SCROLL -->
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/graco.com" alt="Graco" onerror="this.outerHTML='<b class=\'partner-fallback\'>GRACO</b>'">
+                </div>
+            </div>
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/pramac.com" alt="Pramac" onerror="this.outerHTML='<b class=\'partner-fallback\'>PRAMAC</b>'">
+                </div>
+            </div>
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/asteco.com" alt="Asteco" onerror="this.outerHTML='<b class=\'partner-fallback\'>ASTECO</b>'">
+                </div>
+            </div>
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/bms.pl" alt="BMS" onerror="this.outerHTML='<b class=\'partner-fallback\'>BMS</b>'">
+                </div>
+            </div>
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/kreber.nl" alt="Kreber" onerror="this.outerHTML='<b class=\'partner-fallback\'>KREBER</b>'">
+                </div>
+            </div>
+            <div class="partner-logo">
+                <div class="partner-card">
+                    <img src="https://logo.clearbit.com/nivcomp.com" alt="Nivcomp" onerror="this.outerHTML='<b class=\'partner-fallback\'>NIVCOMP</b>'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up" style="text-align: center; margin-bottom: 50px;">
+                <h2 style="border-left: none; padding-left: 0; display: inline-block; border-bottom: 4px solid var(--primary-color);">Gdzie nas znaleźć?</h2>
+                <p style="margin-top: 15px;">Jesteśmy do Twojej dyspozycji. Zadzwoń, napisz lub odwiedź nas!</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-up">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Adres</h4>
+                            <p>ul. Popow 85, 99-400 Łowicz</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telefon</h4>
+                            <p><a href="tel:+48531402222" style="color: inherit; text-decoration: none;">(+48) 531 402 222</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p><a href="mailto:kontakt@plusizolacje.pl" style="color: inherit; text-decoration: none;">kontakt@plusizolacje.pl</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Final CTA Section -->
+    <section id="cta-final">
+        <div class="container" data-aos="zoom-in">
+            <h2>Potrzebujesz wyceny?</h2>
+            <p>Skontaktuj się z nami — pierwsza wycena jest bezpłatna</p>
+            <div class="hero-btns" style="display: flex; justify-content: center; gap: 20px;">
+                <a href="tel:+48531402222" class="btn btn-primary">Zadzwoń: +48 531 402 222</a>
+                <a href="#contact" class="btn btn-outline" style="border-color: #fff; color: #fff;">Napisz do nas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo">
+                    <h2>PLUS PIOTR LUS</h2>
+                    <p>Specjalizujemy się w wykonywaniu wylewek betonowych oraz w ocieplaniu budynków Pianą PUR. Ponad
+                        300 zrealizowanych inwestycji rocznie!</p>
+                    <div class="social-links">
+                        <a href="#" style="font-size: 1.5rem; margin-right: 15px;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Menu</h3>
+                    <ul>
+                        <li><a href="#hero">O nas</a></li>
+                        <li><a href="#services">Usługi</a></li>
+                        <li><a href="#">Realizacje</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Kontakt</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> ul. Popow 85, 99-400 Łowicz</p>
+                    <p><i class="fas fa-phone"></i> (+48) 531 402 222</p>
+                    <p><i class="fas fa-envelope"></i> kontakt@plusizolacje.pl</p>
+                    <p><i class="fas fa-clock"></i> Pon - Pt: 8:00 - 18:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PLUS Piotr Lus. Wszelkie prawa zastrzeżone. Projekt i Realizacja: Antigravity AI</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Initialize Map
+        const map = L.map('map').setView([52.1003, 19.9442], 9);
+        L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO'
+        }).addTo(map);
+
+        const cities = [
+            { name: "Łowicz (Siedziba)", pos: [52.1003, 19.9442], main: true },
+            { name: "Skierniewice", pos: [51.9667, 20.1500] },
+            { name: "Kutno", pos: [52.2319, 19.3650] },
+            { name: "Sochaczew", pos: [52.2296, 20.2396] },
+            { name: "Łyszkowice", pos: [52.0167, 19.9333] },
+            { name: "Piotrków Trybunalski", pos: [51.4058, 19.7028] }
+        ];
+
+        var serviceArea = L.polygon([
+            [52.45, 19.20],
+            [52.50, 19.80],
+            [52.40, 20.40],
+            [52.10, 20.60],
+            [51.70, 20.30],
+            [51.30, 19.70],
+            [51.40, 19.10],
+            [51.80, 18.90],
+            [52.20, 18.95]
+        ], {
+            color: '#c0392b',
+            weight: 2,
+            opacity: 0.8,
+            fillColor: '#c0392b',
+            fillOpacity: 0.12,
+            dashArray: null
+        }).addTo(map);
+
+        cities.forEach(city => {
+            L.circleMarker(city.pos, {
+                radius: city.main ? 14 : 10,
+                fillColor: '#c0392b',
+                color: '#ffffff',
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.9
+            }).bindPopup(`<b>${city.name}</b>`).addTo(map);
+        });
+
+        // Count-up animation
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+
+        const countUp = (target) => {
+            const value = +target.getAttribute('data-target');
+            const data = +target.innerText;
+            const time = value / speed;
+
+            if (data < value) {
+                target.innerText = Math.ceil(data + time);
+                setTimeout(() => countUp(target), 20);
+            } else {
+                target.innerText = value + (value === 4000 ? '+' : (value === 100 ? '%' : ''));
+            }
+        };
+
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    countUp(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        counters.forEach(counter => observer.observe(counter));
+
+        // Tab switching logic
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+
+            // Highlight the button that opened the tab
+            if (evt.currentTarget.classList.contains('tab-btn')) {
+                evt.currentTarget.classList.add("active");
+            } else {
+                // If opened via dropdown, find the corresponding tab button
+                let btns = document.getElementsByClassName('tab-btn');
+                for (let btn of btns) {
+                    if (btn.innerText.includes(evt.target.innerText) ||
+                        (tabName === 'tab3' && btn.innerText.includes('Zamkniętokomórkowa')) ||
+                        (tabName === 'tab4' && btn.innerText.includes('Otwartokomórkowa'))) {
+                        btn.classList.add('active');
+                    }
+                }
+            }
+
+            // Smooth scroll to services if needed
+            if (!evt.currentTarget.classList.contains('tab-btn')) {
+                document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Sticky header logic
+        window.onscroll = function() {
+            const header = document.querySelector('header');
+            if (window.pageYOffset > 50) {
+                header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+            } else {
+                header.style.boxShadow = "none";
+            }
+        };
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const menuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const overlay = document.querySelector('.mobile-overlay');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        menuToggle.addEventListener('click', openMobileMenu);
+        menuClose.addEventListener('click', closeMobileMenu);
+        overlay.addEventListener('click', closeMobileMenu);
+    </script>
+</body>
+
+</html>
